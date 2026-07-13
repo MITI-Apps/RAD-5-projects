@@ -1,0 +1,22 @@
+[
+    {
+        "id": "S01",
+        "name": "miracle",
+        "role": "STUDENT"
+    },
+    {
+        "id": "T01",
+        "name": "micheal",
+        "role": "Teacher"
+    },
+    {
+        "id": "T02",
+        "name": "victoria",
+        "role": "Teacher"
+    },
+    {
+        "id": "S02",
+        "name": "wisdom",
+        "role": "STUDENT"
+    }    
+]
