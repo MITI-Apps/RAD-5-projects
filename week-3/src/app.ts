@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import type { User } from './types.js';
+import http from 'http';            // built-in module, no install needed
 
 const dataPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'data.json');
 
@@ -26,13 +27,31 @@ const foundUser = (studendID: string) => {
         };
 
         if (student.role === "STUDENT"){
-            resolve(student)
+            const updatedStudent: User = {
+                ...student,
+                name: student.name.toUpperCase(),
+                gpa: 4.0
+            }
+            const updatedAllUsers = allUsers.map(user => user.id === studendID ? updatedStudent : user)
+            const newDataPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'updatedData.json');
+            fs.writeFile(newDataPath, JSON.stringify(updatedAllUsers, null, 2), 'utf-8')
+            resolve(updatedAllUsers)
         } else {
             reject(`Access denied the user with id ${studendID} is a teacher not a student`)
-        }
-    })
-}
+        };
+    });
+};
 
-foundUser("u01")
-  .then(student => console.log("Found", student))
-  .catch(error => console.error("rejected", error))
+
+
+// --- HTTP server starts here ---
+// -- craeting the server ---
+const server = http.createServer(async (req, res) => {
+    foundUser("v02")
+        .then(student => res.end(JSON.stringify(student)))        // ← shows in browser
+
+        .catch(error => res.end(JSON.stringify(error)))    // ← shows in terminal like before
+});
+server.listen(3000, () => {
+    console.log('Server is listening on port 3000');
+});

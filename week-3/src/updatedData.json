@@ -16,7 +16,8 @@
   },
   {
     "id": "S02",
-    "name": "wisdom",
-    "role": "STUDENT"
+    "name": "WISDOM",
+    "role": "STUDENT",
+    "gpa": 4
   }
 ]
